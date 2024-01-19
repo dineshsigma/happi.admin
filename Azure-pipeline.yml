@@ -1,0 +1,25 @@
+trigger:
+  branches:
+    include:
+      - master
+
+variables:
+# Ivory Firebase token --> 1//0gojTS19F-xynCgYIARAAGBASNwF-L9Ir7JOgCydXEaLyOTYbp1aMA0HZlEfswjnZ16B-QU4VSLtyUgFt50sugsDPPKXkSUCDrDc
+# Happi Firebase token --> 1//0g9RY_9k7hX3vCgYIARAAGBASNwF-L9IrzD1pNHJTJQxEDCFt-EjLf_-7ZvAZDiERZa1iRgsqYRt4fqTPdbP42NwMAe5l_-TJdwA
+  FIREBASE_TOKEN: 1//0gojTS19F-xynCgYIARAAGBASNwF-L9Ir7JOgCydXEaLyOTYbp1aMA0HZlEfswjnZ16B-QU4VSLtyUgFt50sugsDPPKXkSUCDrDc
+
+  vmImage: 'LocalServerAgent'
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '18.x'
+    displayName: 'Install Node.js'
+
+  - script: |
+      npm install -g firebase-tools
+      npm install
+      npm run build
+      firebase use --add happi-admin
+      firebase deploy --token "$(FIREBASE_TOKEN)"
+    displayName: 'Build and deploy Firebase project'

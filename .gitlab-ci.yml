@@ -1,0 +1,16 @@
+stages:
+    - deploy
+
+deploy-job:
+    stage: deploy       
+    script: 
+        - npm install 
+        - npm run build-ci
+       
+
+        - rsync -a /home/gitlab-runner/builds/GJA5wtGH/0/iiplwork/happi.admin.react.ui/build/ app@164.52.217.185:/home/app/public_html/admin.happimobiles.com/        
+
+    only:
+        - master
+    tags:
+        - main-runner

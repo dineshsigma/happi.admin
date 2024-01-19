@@ -1,1 +1,1 @@
-# happi.admin
+# Happi Admin UI
